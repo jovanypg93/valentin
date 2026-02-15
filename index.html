@@ -176,13 +176,17 @@
 <script>
 let current = 'p1';
 let musicStarted = false;
-const music = document.getElementById("bgMusic");
 
 function startMusic() {
-  if (!musicStarted) {
+  const music = document.getElementById("bgMusic");
+
+  if (!musicStarted && music) {
     music.volume = 0.3;
-    music.play().catch(() => {});
-    musicStarted = true;
+    music.play().then(() => {
+      musicStarted = true;
+    }).catch(err => {
+      console.log("Autoplay bloqueado:", err);
+    });
   }
 }
 
@@ -191,7 +195,8 @@ function goTo(id) {
   document.getElementById(id).classList.add('active');
   current = id;
   window.scrollTo(0,0);
-  startMusic();
+
+  startMusic(); // 🔥 se activa en interacción real
 }
 
 function showModal(text) {
