@@ -175,30 +175,20 @@
 
 <script>
 let current = 'p1';
-let musicStarted = false;
 
-document.addEventListener("click", function startMusicOnce() {
+function startGame() {
   const music = document.getElementById("bgMusic");
 
-  if (!musicStarted && music) {
-    music.muted = true;          // 🔥 truco clave
-    music.play().then(() => {
-      music.muted = false;       // quitar mute después de iniciar
-      music.volume = 0.3;
-      musicStarted = true;
-    }).catch(err => {
-      console.log("Error:", err);
-    });
-  }
+  music.volume = 0.3;
+  music.play();
 
-  document.removeEventListener("click", startMusicOnce);
-});
+  goTo('p2');
+}
 
 function goTo(id) {
   document.getElementById(current).classList.remove('active');
   document.getElementById(id).classList.add('active');
   current = id;
-  window.scrollTo(0,0);
 }
 
 function showModal(text) {
@@ -213,7 +203,7 @@ function closeModal(e) {
 }
 </script>
 
-<audio controls loop playsinline>
+<audio id="bgMusic" preload="auto" loop playsinline>
   <source src="https://jovanypg93.github.io/valentin/musica_v2.mp3" type="audio/mpeg">
 </audio>
 
