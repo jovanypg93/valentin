@@ -177,25 +177,22 @@
 let current = 'p1';
 let musicStarted = false;
 
-function initMusicOnFirstClick() {
-  document.addEventListener("click", function startOnce() {
-    const music = document.getElementById("bgMusic");
+document.addEventListener("click", function startMusicOnce() {
+  const music = document.getElementById("bgMusic");
 
-    if (!musicStarted && music) {
+  if (!musicStarted && music) {
+    music.muted = true;          // 🔥 truco clave
+    music.play().then(() => {
+      music.muted = false;       // quitar mute después de iniciar
       music.volume = 0.3;
-      music.play().then(() => {
-        musicStarted = true;
-      }).catch(err => {
-        console.log("Bloqueado:", err);
-      });
-    }
+      musicStarted = true;
+    }).catch(err => {
+      console.log("Error:", err);
+    });
+  }
 
-    // 🔥 solo se ejecuta una vez
-    document.removeEventListener("click", startOnce);
-  });
-}
-
-initMusicOnFirstClick();
+  document.removeEventListener("click", startMusicOnce);
+});
 
 function goTo(id) {
   document.getElementById(current).classList.remove('active');
@@ -216,7 +213,7 @@ function closeModal(e) {
 }
 </script>
 
-<audio id="bgMusic" preload="auto" loop>
+<audio id="bgMusic" preload="auto" loop playsinline>
   <source src="https://jovanypg93.github.io/valentin/musica.mp3" type="audio/mpeg">
 </audio>
 
