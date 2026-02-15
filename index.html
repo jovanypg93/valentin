@@ -191,12 +191,11 @@ function goTo(id) {
   document.getElementById(id).classList.add('active');
   current = id;
   window.scrollTo(0,0);
-
-  startMusic(); // 🔥 se activa en cualquier interacción
+  startMusic();
 }
 
 function showModal(text) {
-  startMusic(); // 🔥 también aquí por seguridad
+  startMusic();
   document.getElementById('modalText').innerHTML = text;
   document.getElementById('modal').style.display = 'flex';
 }
