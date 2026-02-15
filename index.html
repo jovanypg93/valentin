@@ -174,32 +174,38 @@
 </body>
 
 <script>
-  let current = 'p1';
-  let musicStarted = false;
+let current = 'p1';
+let musicStarted = false;
+const music = document.getElementById("bgMusic");
 
-  function goTo(id) {
-    document.getElementById(current).classList.remove('active');
-    document.getElementById(id).classList.add('active');
-    current = id;
-    window.scrollTo(0,0);
-
-    // Iniciar música en la primera interacción
-    if (!musicStarted) {
-      document.getElementById("bgMusic").play();
-      musicStarted = true;
-    }
+function startMusic() {
+  if (!musicStarted) {
+    music.volume = 0.3;
+    music.play().catch(() => {});
+    musicStarted = true;
   }
+}
 
-  function showModal(text) {
-    document.getElementById('modalText').innerHTML = text;
-    document.getElementById('modal').style.display = 'flex';
-  }
+function goTo(id) {
+  document.getElementById(current).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  current = id;
+  window.scrollTo(0,0);
 
-  function closeModal(e) {
-    if (!e || e.target.classList.contains('modal') || e.target.classList.contains('close')) {
-      document.getElementById('modal').style.display = 'none';
-    }
+  startMusic(); // 🔥 se activa en cualquier interacción
+}
+
+function showModal(text) {
+  startMusic(); // 🔥 también aquí por seguridad
+  document.getElementById('modalText').innerHTML = text;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal(e) {
+  if (!e || e.target.classList.contains('modal') || e.target.classList.contains('close')) {
+    document.getElementById('modal').style.display = 'none';
   }
+}
 </script>
 
   <audio id="bgMusic" loop>
